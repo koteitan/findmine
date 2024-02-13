@@ -1,17 +1,92 @@
-<html><head><title>nostter me</title>
+<html><head><title>find mine</title>
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
+<link rel="icon" type="image/png" sizes="32x32" href="../favicon.ico">
+<script>
+var url="";
+var prevurl="";
+
+var search = function(site){
+  var w = encodeURIComponent(form0.word.value);
+  localStorage.setItem("bsky_a", form0.bsky_a.value);
+  localStorage.setItem("twitter_a", form0.twitter_a.value);
+  localStorage.setItem("twilog_a", form0.twilog_a.value);
+  if(site=='nostr'){
+    url = "https://nostter.app/search?mine=ok&q=" + w;
+  }else if(site=='bsky'){
+    var a = encodeURIComponent(form0.bsky_a.value);
+    url = "https://bsky.app/search?q=from:" + a + "+" + w;
+    location.href = url;
+  }else if(site=='twilog'){
+    var a = encodeURIComponent(form0.twilog_a.value);
+    url = "https://twilog.togetter.com/" + a + "/search?ao=a&word=" + w;
+  }else if(site=='twitter'){
+    var a = encodeURIComponent(form0.twitter_a.value);
+    url = "https://twitter.com/search?q=from:" + a + "+" + w;
+  }
+  location.href = url;
+}
+window.onload=function(){
+  var p;
+  if((p=localStorage.getItem(   "bsky_a"))!==null) form0.   bsky_a.value = p;
+  if((p=localStorage.getItem( "twilog_a"))!==null) form0. twilog_a.value = p;
+  if((p=localStorage.getItem("twitter_a"))!==null) form0.twitter_a.value = p;
+  document.getElementById("word").focus();
+}
+/*
+
+// how to localStorage
+localStorage.setItem("nostr_pubkey", form0.pubkey.value);
+
+// how to clipboard
+url=xxxx;
+prevurl=url;
+if(prevurl!=url){
+  history.pushState(null,null,url);
+}
+*/
+//</script>
 </head><body>
-<h1>nostter me</h1>
-<form id="form0" method="get" onsubmit="search();" action="https://nostter.app/search?mine=ok&q=">
-<input type="text" name="q" id="q" value="" size="30">
-<input type="hidden" name="mine" id="mine" value="ok"><br>
-<input type="submit" value="search"><br>
+<h1>find mine</h1>
+
+<form id="form0" method="get" action="https://nostter.app/search">
+search <input type="text" name="word" id="word" value="" size="30"><br>
+<table>
+  <tr>
+    <td>in</td>
+    <td><input type="button" width="10" value="nostr" onclick="search('nostr');"></td>
+    <td>by</td>
+    <td><a href="https://nostter.com/search">nostter</a></td>
+    <td></td>
+  </tr><tr>
+    <td>in</td>
+    <td><input type="button" value="Bluesky" onclick="search('bsky');"></td>
+    <td>as</td>
+    <td><input type="text" name="bsky_a" id="bsky_a" value=".bsky.social" size="30"></td>
+    <td>(ex. koteitan.bsky.social)</td>
+  </tr><tr>
+    <td>in</td>
+    <td><input type="button" value="twilog" onclick="search('twilog');"></td>
+    <td>as</td>
+    <td><input type="text" name="twilog_a" id="twilog_a" value="" size="30"></td>
+    <td>(ex. koteitan)</td>
+  </tr><tr>
+    <td>in</td>
+    <td><input type="button" value="twitter" onclick="search('twitter');"></td>
+    <td>as</td>
+    <td><input type="text" name="twitter_a" id="twitter_a" value="" size="30"></td>
+    <td>(ex. koteitan)</td>
+  </tr>
+  </table>
 </form>
+
 <address>
-  <a href="./">nostter me</a> version 1.0<br>
-  is programmed by <a href="https://nostter.app/koteitan.github.io">koteitan</a><br>
+  <a href="./">find mine</a> version 1.0<br>
+  is programmed by koteitan from 
+  <a href="https://nostter.app/koteitan.github.io">nostr</a> | 
+  <a href="https://bsky.app/profile/koteitan.bsky.social">Bluesky</a> | 
+  <a href="https://twitter.com/koteitan">twitter</a><br>
   <a href="https://nostter.app/home">nostter</a> is by <a href="https://github.com/SnowCait">SnowCait</a><br>
-  Source code is on <a href="https://github.com/koteitan/koteitan.github.io/tree/master/nostterme">github</a><br>
+  Source code is on <a href="https://github.com/koteitan/findmine">github</a><br>
 </address>
 </body></html>
 
