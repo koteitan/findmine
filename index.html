@@ -4,44 +4,55 @@
 </head><body>
 <h1>find mine</h1>
 <form id="form0" method="get" action="https://nostter.app/search">
-search <input type="text" name="word" id="word" value="" size="30"><br>
+  search <input type="text" name="word" id="word" value="" size="30" onkeydown="if(event.keyCode===13){jumpprimary();}"><br>
 <table>
-  <tr id="nostr_tr">
+  <tr id="twitter_tr">
     <td>in</td>
-    <td><input type="button" width="10" value="nostr" onclick="search('nostr');"></td>
-    <td>by</td>
-    <td><a href="https://nostter.com/search">nostter</a></td>
-    <td></td>
-  </tr><tr id="bsky_tr">
-    <td>in</td>
-    <td><input type="button" value="Bluesky" onclick="search('bsky');"></td>
-    <td>as</td>
-    <td><input type="text" name="bsky_a" id="bsky_a" value=".bsky.social" size="30"></td>
-    <td>(ex. koteitan.bsky.social)</td>
-  </tr><tr id="twilog_tr">
-    <td>in</td>
-    <td><input type="button" value="twilog" onclick="search('twilog');"></td>
-    <td>as</td>
-    <td><input type="text" name="twilog_a" id="twilog_a" value="" size="30"></td>
-    <td>(ex. koteitan)</td>
-  </tr><tr id="twitter_tr">
-    <td>in</td>
-    <td><input type="button" value="twitter" onclick="search('twitter');"></td>
+    <td><input type="button" value="twitter" onclick="search('twitter','_self');"></td>
     <td>as</td>
     <td><input type="text" name="twitter_a" id="twitter_a" value="" size="30"></td>
     <td>(ex. koteitan)</td>
   </tr>
+  <tr id="twilog_tr">
+    <td>in</td>
+    <td><input type="button" value="twilog" onclick="search('twilog','_self');"></td>
+    <td>as</td>
+    <td><input type="text" name="twilog_a" id="twilog_a" value="" size="30"></td>
+    <td>(ex. koteitan)</td>
+  </tr>
+  <tr id="nostr_tr">
+    <td>in</td>
+    <td><input type="button" width="10" value="nostr" onclick="search('nostr','_self');"></td>
+    <td>by</td>
+    <td><a href="https://nostter.com/search">nostter</a></td>
+    <td></td>
+  </tr>
+  <tr id="bsky_tr">
+    <td>in</td>
+    <td><input type="button" value="Bluesky" onclick="search('bsky','_self');"></td>
+    <td>as</td>
+    <td><input type="text" name="bsky_a" id="bsky_a" value=".bsky.social" size="30"></td>
+    <td>(ex. koteitan.bsky.social)</td>
+  </tr>
+  <tr id="all_tr">
+    <td>in</td>
+    <td><input type="button" value="all sites" onclick="search('all');"></td>
+  </tr>
   </table>
 </form>
 <form id=form1 style="text-align:right">
-  <table align="right">
-    <tr>
-      <td>nostr:   </td><td><input id="nostr_d"   type=checkbox checked onchange="javascript:setdisplay();"><td>
-      <td>Bluesky: </td><td><input id="bsky_d"    type=checkbox checked onchange="javascript:setdisplay();"><td>
-      <td>twilog:  </td><td><input id="twilog_d"  type=checkbox checked onchange="javascript:setdisplay();"><td>
-      <td>twitter: </td><td><input id="twitter_d" type=checkbox checked onchange="javascript:setdisplay();"><td>
-    </tr>
-  </table><br clear="right">
+  <div align="right">
+  &nbsp;twitter:<input id="twitter_d" type=checkbox checked onchange="javascript:setdisplay();">
+  &nbsp; twilog:<input id= "twilog_d" type=checkbox checked onchange="javascript:setdisplay();">
+  &nbsp;  nostr:<input id=  "nostr_d" type=checkbox checked onchange="javascript:setdisplay();">
+  &nbsp;Bluesky:<input id=   "bsky_d" type=checkbox checked onchange="javascript:setdisplay();">
+  &nbsp;enter key for:<select id="primarysel" onchange="javascript:saveprimary();">
+    <option id="nostr_pri"   value="nostr"           >nostr  </option>
+    <option id="bsky_pri"    value="bsky"            >Bluesky</option>
+    <option id="twilog_pri"  value="twilog"          >twilog </option>
+    <option id="twitter_pri" value="twitter" selected>twitter</option>
+  </select>
+  </div><br clear="right">
 </form>
 <address style="text-align:right">
   <a href="./">find mine</a> version 1.01<br>
@@ -52,71 +63,6 @@ search <input type="text" name="word" id="word" value="" size="30"><br>
   <a href="https://nostter.app/home">nostter</a> is by <a href="https://github.com/SnowCait">SnowCait</a><br>
   Source code is on <a href="https://github.com/koteitan/findmine">github</a><br>
 </address>
-<script>
-var url="";
-var prevurl="";
-
-var search = function(site){
-  var w = encodeURIComponent(form0.word.value);
-  localStorage.setItem("bsky_a", form0.bsky_a.value);
-  localStorage.setItem("twitter_a", form0.twitter_a.value);
-  localStorage.setItem("twilog_a", form0.twilog_a.value);
-  if(site=='nostr'){
-    url = "https://nostter.app/search?mine=ok&q=" + w;
-  }else if(site=='bsky'){
-    var a = encodeURIComponent(form0.bsky_a.value);
-    url = "https://bsky.app/search?q=from:" + a + "+" + w;
-    location.href = url;
-  }else if(site=='twilog'){
-    var a = encodeURIComponent(form0.twilog_a.value);
-    url = "https://twilog.togetter.com/" + a + "/search?ao=a&word=" + w;
-  }else if(site=='twitter'){
-    var a = encodeURIComponent(form0.twitter_a.value);
-    url = "https://twitter.com/search?q=from:" + a + "+" + w;
-  }
-  location.href = url;
-}
-window.onload=function(){
-  var p;
-  if((p=localStorage.getItem(   "bsky_a"))!==null) form0.   bsky_a.value = p;
-  if((p=localStorage.getItem( "twilog_a"))!==null) form0. twilog_a.value = p;
-  if((p=localStorage.getItem("twitter_a"))!==null) form0.twitter_a.value = p;
-  if((p=localStorage.getItem(  "nostr_d"))!==null) form1.  nostr_d.checked = p==1;
-  if((p=localStorage.getItem(   "bsky_d"))!==null) form1.   bsky_d.checked = p==1;
-  if((p=localStorage.getItem( "twilog_d"))!==null) form1. twilog_d.checked = p==1;
-  if((p=localStorage.getItem("twitter_d"))!==null) form1.twitter_d.checked = p==1;
-  setdisplay();
-  document.getElementById("word").focus();
-}
-var setdisplay=function(){
-  var checklist=[ nostr_d , bsky_d , twilog_d , twitter_d ];
-  var trlist   =[ nostr_tr, bsky_tr, twilog_tr, twitter_tr];
-  var lsqlist  =["nostr_d","bsky_d","twilog_d","twitter_d"];
-  for(var i=0;i<trlist.length;i++){
-    var check = checklist[i];
-    var tr    =    trlist[i];
-    var lsq   =   lsqlist[i];
-    if(check.checked){
-      tr.removeAttribute("style");
-      localStorage.setItem(lsq, 1);
-    }else{
-      tr.setAttribute("style","display:none");
-      localStorage.setItem(lsq, 0);
-    }
-  }
-}
-/*
-
-// how to localStorage
-localStorage.setItem("nostr_pubkey", form0.pubkey.value);
-
-// how to clipboard
-url=xxxx;
-prevurl=url;
-if(prevurl!=url){
-  history.pushState(null,null,url);
-}
-*/
-//</script>
+<script type="text/javascript" src="main.js"></script>
 </body></html>
 
