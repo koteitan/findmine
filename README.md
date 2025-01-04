@@ -8,7 +8,7 @@ Please set the your account here:
 
 ![image](https://github.com/user-attachments/assets/a6d11fd0-57a0-4770-af15-83b057b702de)
 
-All the settings are remembered in your browser.
+All the settings are remembered in your browser automatically.
 
 Then put the words and press the button and enjoy:
 
