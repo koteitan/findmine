@@ -1,5 +1,5 @@
 # findmine
-find your post in nostr, Bluesky, twilog and twitter
+keyword search for your post in nostr, Bluesky, twilog and twitter
 
 https://koteitan.github.io/findmine/
 
