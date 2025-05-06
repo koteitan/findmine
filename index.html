@@ -1,70 +1,109 @@
-<html><head><title>find mine</title>
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<link rel="icon" type="image/png" sizes="32x32" href="../favicon.ico">
-</head><body>
-<h1>find mine</h1>
-<form id="form0" method="get" action="https://nostter.app/search">
-  search <input type="text" name="word" id="word" value="" size="30" onkeydown="if(event.keyCode===13){jumpprimary();}"><br>
-<table>
-  <tr id="twitter_tr">
-    <td>in</td>
-    <td><input type="button" value="twitter" onclick="search('twitter','_self');"></td>
-    <td>as</td>
-    <td><input type="text" name="twitter_a" id="twitter_a" value="" size="18" onchange="javascript:saveuser();"></td>
-    <td>(ex. koteitan)</td>
-  </tr>
-  <tr id="twilog_tr">
-    <td>in</td>
-    <td><input type="button" value="twilog" onclick="search('twilog','_self');"></td>
-    <td>as</td>
-    <td><input type="text" name="twilog_a" id="twilog_a" value="" size="18" onchange="javascript:saveuser();"></td>
-    <td>(ex. koteitan)</td>
-  </tr>
-  <tr id="nostr_tr">
-    <td>in</td>
-    <td><input type="button" width="10" value="nostr" onclick="search('nostr','_self');"></td>
-    <td>by</td>
-    <td><a href="https://nostter.com/search">nostter</a></td>
-    <td></td>
-  </tr>
-  <tr id="bsky_tr">
-    <td>in</td>
-    <td><input type="button" value="Bluesky" onclick="search('bsky','_self');"></td>
-    <td>as</td>
-    <td><input type="text" name="bsky_a" id="bsky_a" value=".bsky.social" size="18" onchange="javascript:saveuser();"></td>
-    <td>(ex. koteitan.bsky.social)</td>
-  </tr>
-  <tr id="all_tr">
-    <td>in</td>
-    <td><input type="button" value="all sites" onclick="search('all');"></td>
-  </tr>
-  </table>
-    for me:<input type="radio" name="whosesel" id="me" checked onchange="javascript:savewhose();">
-  everyone:<input type="radio" name="whosesel" id="everyone"   onchange="javascript:savewhose();">
-</form>
-<form id=form1 style="text-align:right">
-  <div align="right">
-  &nbsp;twitter:<input id="twitter_d" type=checkbox checked onchange="javascript:setdisplay();">
-  &nbsp; twilog:<input id= "twilog_d" type=checkbox checked onchange="javascript:setdisplay();">
-  &nbsp;  nostr:<input id=  "nostr_d" type=checkbox checked onchange="javascript:setdisplay();">
-  &nbsp;Bluesky:<input id=   "bsky_d" type=checkbox checked onchange="javascript:setdisplay();">
-  &nbsp;enter key for:<select id="primarysel" onchange="javascript:saveprimary();">
-    <option id="nostr_pri"   value="nostr"           >nostr  </option>
-    <option id="bsky_pri"    value="bsky"            >Bluesky</option>
-    <option id="twilog_pri"  value="twilog"          >twilog </option>
-    <option id="twitter_pri" value="twitter" selected>twitter</option>
-  </select>
-  </div><br clear="right">
-</form>
-<address style="text-align:right">
-  <a href="./">find mine</a> version 1.04<br>
-  is programmed by koteitan from 
-  <a href="https://nostter.app/koteitan.github.io">nostr</a> | 
-  <a href="https://bsky.app/profile/koteitan.bsky.social">Bluesky</a> | 
-  <a href="https://twitter.com/koteitan">twitter</a><br>
-  <a href="https://nostter.app/home">nostter</a> is by <a href="https://github.com/SnowCait">SnowCait</a><br>
-  Source code is on <a href="https://github.com/koteitan/findmine">github</a><br>
-</address>
-<script type="text/javascript" src="main.js"></script>
-</body></html>
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>find mine</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="../favicon.ico">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>find mine</h1>
+  
+  <form id="form0" method="get" action="https://nostter.app/search">
+    <div class="search-container">
+      <input type="text" name="word" id="word" value="" placeholder="Enter search keywords" onkeydown="if(event.keyCode===13){jumpprimary();}">
+    </div>
+    
+    <table>
+      <tr id="twitter_tr" class="service-row">
+        <td>in</td>
+        <td><input type="button" value="Twitter" onclick="search('twitter','_self');"></td>
+        <td>as</td>
+        <td><input type="text" name="twitter_a" id="twitter_a" value="" placeholder="Username" onchange="javascript:saveuser();"></td>
+        <td>(e.g. koteitan)</td>
+      </tr>
+      <tr id="twilog_tr" class="service-row">
+        <td>in</td>
+        <td><input type="button" value="Twilog" onclick="search('twilog','_self');"></td>
+        <td>as</td>
+        <td><input type="text" name="twilog_a" id="twilog_a" value="" placeholder="Username" onchange="javascript:saveuser();"></td>
+        <td>(e.g. koteitan)</td>
+      </tr>
+      <tr id="nostr_tr" class="service-row">
+        <td>in</td>
+        <td><input type="button" value="Nostr" onclick="search('nostr','_self');"></td>
+        <td>by</td>
+        <td><a href="https://nostter.com/search">nostter</a></td>
+        <td></td>
+      </tr>
+      <tr id="bsky_tr" class="service-row">
+        <td>in</td>
+        <td><input type="button" value="Bluesky" onclick="search('bsky','_self');"></td>
+        <td>as</td>
+        <td><input type="text" name="bsky_a" id="bsky_a" value=".bsky.social" placeholder="Username" onchange="javascript:saveuser();"></td>
+        <td>(e.g. koteitan.bsky.social)</td>
+      </tr>
+      <tr id="all_tr" class="service-row">
+        <td>in</td>
+        <td><input type="button" value="Search All Sites" onclick="search('all');"></td>
+        <td colspan="3"></td>
+      </tr>
+    </table>
+    
+    <div class="options-container">
+      <div class="radio-group">
+        <input type="radio" name="whosesel" id="me" checked onchange="javascript:savewhose();">
+        <label for="me">My posts only</label>
+      </div>
+      <div class="radio-group">
+        <input type="radio" name="whosesel" id="everyone" onchange="javascript:savewhose();">
+        <label for="everyone">All users</label>
+      </div>
+    </div>
+  </form>
+  
+  <form id="form1">
+    <div class="display-options">
+      <div class="checkbox-group">
+        <input id="twitter_d" type="checkbox" checked onchange="javascript:setdisplay();">
+        <label for="twitter_d">Twitter</label>
+      </div>
+      <div class="checkbox-group">
+        <input id="twilog_d" type="checkbox" checked onchange="javascript:setdisplay();">
+        <label for="twilog_d">Twilog</label>
+      </div>
+      <div class="checkbox-group">
+        <input id="nostr_d" type="checkbox" checked onchange="javascript:setdisplay();">
+        <label for="nostr_d">Nostr</label>
+      </div>
+      <div class="checkbox-group">
+        <input id="bsky_d" type="checkbox" checked onchange="javascript:setdisplay();">
+        <label for="bsky_d">Bluesky</label>
+      </div>
+      
+      <div>
+        <label for="primarysel">Search with Enter key:</label>
+        <select id="primarysel" onchange="javascript:saveprimary();">
+          <option id="nostr_pri" value="nostr">Nostr</option>
+          <option id="bsky_pri" value="bsky">Bluesky</option>
+          <option id="twilog_pri" value="twilog">Twilog</option>
+          <option id="twitter_pri" value="twitter" selected>Twitter</option>
+        </select>
+      </div>
+    </div>
+  </form>
+  
+  <address>
+    <a href="./">find mine</a> version 1.1<br>
+    is programmed by koteitan from 
+    <a href="https://nostter.app/koteitan.github.io">nostr</a> | 
+    <a href="https://bsky.app/profile/koteitan.bsky.social">Bluesky</a> | 
+    <a href="https://twitter.com/koteitan">twitter</a><br>
+    <a href="https://nostter.app/home">nostter</a> is by <a href="https://github.com/SnowCait">SnowCait</a><br>
+    Source code is on <a href="https://github.com/koteitan/findmine">github</a>
+  </address>
+  
+  <script type="text/javascript" src="main.js"></script>
+</body>
+</html>
